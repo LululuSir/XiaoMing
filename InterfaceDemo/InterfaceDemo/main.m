@@ -14,16 +14,16 @@ int main(int argc, const char * argv[]) {
         // insert code here...
         NSLog(@"Hello, World!");
         
-        [[ServerBridge shareInstance].printer printHello];
-        [[ServerBridge shareInstance].printer world];
+        [Printer printHello];
+        [Printer world];
         
-        [[ServerBridge shareInstance].loger logHello];
-        [[ServerBridge shareInstance].loger logWorld];
+        [Loger logHello];
+        [Loger logWorld];
         
         // hold the thread
         for (NSUInteger i =0; i<10; i++) {
             [NSThread sleepForTimeInterval:1.0f];
-            [[ServerBridge shareInstance].loger logHello];
+            [Loger logHello];
         }
     }
     return 0;

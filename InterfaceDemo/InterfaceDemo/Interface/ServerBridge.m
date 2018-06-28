@@ -11,9 +11,12 @@
 #import "LogServer.h"
 
 @interface ServerBridge()
-@property (nonatomic, strong) NSMutableArray *logerServers;
 @property (nonatomic, strong) id<PrintServerProtocol> printer;
+@property (nonatomic, strong) NSMutableArray *logerServers;
 @property (nonatomic, strong) id<LogServerProtocol> loger;
+
++ (instancetype)shareInstance;
+- (void)addLogerServer:(id<LogServerProtocol>)player;
 
 @end
 
@@ -26,11 +29,6 @@
         instance = [[self alloc] init];
     });
     return instance;
-}
-
-#pragma mark - printer
-- (void)setPrinterServer:(id<PrintServerProtocol>)printer {
-    _printer = printer;
 }
 
 #pragma mark loger
@@ -67,3 +65,23 @@
 }
 
 @end
+
+id printServer(void)
+{
+    return [ServerBridge shareInstance].printer;
+}
+
+void setPrintServer(id printer) {
+    [ServerBridge shareInstance].printer = printer;
+}
+
+id logServer(void)
+{
+    return [ServerBridge shareInstance].loger;
+}
+
+void addLogServer(id loger)
+{
+    [[ServerBridge shareInstance] addLogerServer:loger];
+}
+

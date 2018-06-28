@@ -24,22 +24,14 @@
 
 @interface ServerBridge : NSObject
 
-+ (instancetype)shareInstance;
-
-#pragma mark - printer
-// 上层业务调用入口
-@property (nonatomic, strong, readonly) id<PrintServerProtocol> printer;
-
-// 底层SDK服务注入入口
-- (void)setPrinterServer:(id<LogServerProtocol>)printer;
-
-#pragma mark - loger
-// 上层业务调用入口
-@property (nonatomic, strong, readonly) id<LogServerProtocol> loger;
-
-// 底层SDK服务注入入口
-- (void)addLogerServer:(id<LogServerProtocol>)loger;
-
 @end
+
+#define Printer printServer()
+extern id printServer(void);
+extern void setPrintServer(id printer);
+
+#define Loger logServer()
+extern id logServer(void);
+extern void addLogServer(id loger);
 
 

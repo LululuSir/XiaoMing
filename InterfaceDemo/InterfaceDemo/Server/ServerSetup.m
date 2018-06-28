@@ -15,10 +15,9 @@
 @implementation ServerSetup
 
 + (void)load {
-    [[ServerBridge shareInstance] setPrinterServer:(id)[PrintServer new]];
-    
-    [[ServerBridge shareInstance] addLogerServer:(id)[LogServer new]];
-    [[ServerBridge shareInstance] addLogerServer:(id)[LogServerNew new]];
+    setPrintServer([PrintServer new]);
+    addLogServer([LogServer new]);
+    addLogServer([LogServerNew new]);
 }
 
 @end
