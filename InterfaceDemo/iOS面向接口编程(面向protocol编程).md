@@ -193,8 +193,42 @@ id printServer(void)
 
 上层调用同上，可以通过block或其他形式，将选择server的条件暴露给上层。需要注意的是，这可能会以另一种形式将上下层再次耦合起来。
 
-## 多个底层接口提供方，顺序调用全部
+### 多个底层接口提供方，顺序调用全部
 这个方案实现起来相对复杂。一种可行的思路是，在接口层进行消息转发，在转发接口时，从servers数组中依次取出server，并进行转发。
+
+### 底层接口暴露及封装
+当底层某个接口需要向上层暴露时，只需要将该接口的定义在protocol中声明即可。
+
+```
+// 内部接口
+@implementation PrintServer
+- (void)innerPrintHello {
+    printf("%s - %s\n",NSStringFromClass([self class]).UTF8String, NSStringFromSelector(_cmd).UTF8String);
+}
+@end
+
+// 对外暴露
+@protocol PrintServerProtocol <NSObject>
+- (void)innerPrintHello;
+@end
+```
+
+如果有重命名的需要，或者内部方法前后进行额外处理，则需要进行额外的封装如：
+
+```
+// 底层接口为:
+- (void)printWorld;
+
+// 希望暴露给上层的接口为：
+- (void)world;
+
+// 则需要进行内部的转发
+- (void)world {
+    // do something befor
+    [self printWorld];
+    // do something after
+}
+```
 
 ## iOS面向接口实现原理
 首先解释一个误区，很多iOS开发工程师认为protocol就是传递方法调用的(委托&代理)，只有dataSource，delegate两种用法。这种理解很狭隘，会限制protocol使用的想象。
