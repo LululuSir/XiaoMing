@@ -190,3 +190,6 @@ App进程的线程资源管理可以在 [xnu](https://github.com/apple/darwin-xn
 
 ## 本文Demo代码
 [代码](https://github.com/LululuSir/XiaoMing)
+
+## 参考文章
+[GCD最大线程数](https://stackoverflow.com/questions/7213845/number-of-threads-created-by-gcd)
